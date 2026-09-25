@@ -1,16 +1,18 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
 export class Login {
   private fb = inject(FormBuilder);
-  authService = inject(AuthService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
   cargando = signal(false);
   error = signal<string | null>(null);
@@ -30,15 +32,14 @@ export class Login {
     this.error.set(null);
 
     this.authService.login(this.form.getRawValue()).subscribe({
-      next: () => this.cargando.set(false),
+      next: () => {
+        this.cargando.set(false);
+        this.router.navigate(['/productos']);
+      },
       error: (err) => {
         this.cargando.set(false);
         this.error.set(err.error?.message ?? 'Email o contraseña incorrectos');
       }
     });
-  }
-
-  cerrarSesion(): void {
-    this.authService.logout();
   }
 }

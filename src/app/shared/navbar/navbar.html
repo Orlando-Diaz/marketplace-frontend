@@ -1,0 +1,15 @@
+<nav class="navbar">
+  <a routerLink="/productos" class="marca">🛍️ Marketplace</a>
+
+  <div class="enlaces">
+    <a routerLink="/productos" routerLinkActive="activo">Catálogo</a>
+
+    @if (authService.usuarioActual(); as usuario) {
+      <span class="usuario">Hola, {{ usuario.nombre }}</span>
+      <button (click)="cerrarSesion()">Cerrar sesión</button>
+    } @else {
+      <a routerLink="/login" routerLinkActive="activo">Iniciar sesión</a>
+      <a routerLink="/registro" class="boton">Registrarme</a>
+    }
+  </div>
+</nav>

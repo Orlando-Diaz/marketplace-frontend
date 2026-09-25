@@ -42,3 +42,15 @@ button {
 button:disabled { background: #93c5fd; cursor: not-allowed; }
 
 .error { color: #dc2626; font-size: 13px; }
+
+.enlace {
+  text-align: center;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.enlace a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: bold;
+}
