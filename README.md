@@ -1,59 +1,66 @@
-# MarketplaceFrontend
+# Marketplace Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.8.
+Frontend de un marketplace de productos (tipo mini Mercado Libre), desarrollado con Angular como parte de un proyecto full-stack. Consume la API REST del [backend en Spring Boot](https://github.com/Orlando-Diaz/marketplace-backend).
 
-## Development server
+## Stack técnico
+- **Framework:** Angular 22 (Angular CLI 22.1.8)
+- **Lenguaje:** TypeScript
+- **Arquitectura:** componentes standalone (sin NgModules)
+- **Detección de cambios:** zoneless, con estado reactivo basado en signals
+- **Formularios:** Reactive Forms con validaciones
+- **HTTP:** HttpClient con interceptor funcional para JWT
+- **Control de flujo:** sintaxis moderna de plantillas (`@if`, `@for`)
 
-To start a local development server, run:
+## Estructura del proyecto
 
+src/app/
+├── core/
+│ ├── interceptors/ → interceptor que agrega el JWT a cada petición
+│ ├── models/ → interfaces TypeScript de los datos de la API
+│ └── services/ → servicios HTTP (auth, productos, categorías, carrito)
+├── features/
+│ ├── auth/ → pantallas de login y registro
+│ └── productos/ → catálogo de productos
+└── shared/
+└── navbar/ → barra de navegación global
+
+
+## Funcionalidades
+
+### Completado
+- Registro de usuarios con validación en el formulario y mensajes de error del backend (email duplicado, validaciones)
+- Inicio de sesión con JWT, sesión persistente en `localStorage`
+- Interceptor HTTP que adjunta automáticamente el token a las peticiones
+- Barra de navegación que cambia según el estado de la sesión
+- Catálogo público de productos con paginación, precio, vendedor, calificación promedio y estado de stock
+
+### Pendiente
+- Detalle de producto y reseñas
+- Carrito de compras
+- Checkout y gestión de direcciones
+- Historial de órdenes
+- Publicación de productos
+- Guards de rutas protegidas
+
+## Cómo correrlo localmente
+
+### Requisitos
+- Node.js
+- Angular CLI: `npm install -g @angular/cli`
+- El [backend](https://github.com/Orlando-Diaz/marketplace-backend) corriendo en `http://localhost:8080` (tiene CORS habilitado para `http://localhost:4200`)
+
+### Pasos
+1. Clona el repo
+2. Instala las dependencias:
 ```bash
-ng serve
+   npm install
 ```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+3. Levanta el servidor de desarrollo:
 ```bash
-ng generate component component-name
+   ng serve
 ```
+4. Abre `http://localhost:4200`
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Autor
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Orlando Díaz — [GitHub](https://github.com/Orlando-Diaz)
