@@ -10,25 +10,7 @@
   } @else {
     <div class="grilla">
       @for (p of productos(); track p.id) {
-        <article class="tarjeta">
-          <span class="categoria">{{ p.categoriaNombre }}</span>
-          <h3>{{ p.nombre }}</h3>
-          <p class="descripcion">{{ p.descripcion }}</p>
-          <p class="precio">{{ p.precio | currency:'COP':'symbol-narrow':'1.0-0' }}</p>
-
-          <div class="pie">
-            <span>Vende: {{ p.usuarioNombre }}</span>
-            @if (p.calificacionPromedio !== null) {
-              <span>⭐ {{ p.calificacionPromedio | number:'1.1-1' }} ({{ p.totalResenas }})</span>
-            } @else {
-              <span class="sin-resenas">Sin reseñas</span>
-            }
-          </div>
-
-          @if (p.stock === 0) {
-            <span class="agotado">Agotado</span>
-          }
-        </article>
+        <app-producto-card [producto]="p" />
       }
     </div>
 

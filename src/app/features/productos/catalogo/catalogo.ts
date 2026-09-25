@@ -1,11 +1,13 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { ProductoService } from '../../../core/services/producto';
-import { Producto } from '../../../core/models/producto.model';
+import { Producto } from '../../../core/models/producto.model'
+import { ProductoCard } from '../../../shared/producto-card/producto-card';
+;
 
 @Component({
   selector: 'app-catalogo',
-  imports: [CurrencyPipe, DecimalPipe],
+  imports: [ProductoCard],
   templateUrl: './catalogo.html',
   styleUrl: './catalogo.css'
 })
