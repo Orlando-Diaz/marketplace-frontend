@@ -1,7 +1,8 @@
 <nav class="navbar">
-  <a routerLink="/productos" class="marca">🛍️ Marketplace</a>
+  <a routerLink="/" class="marca">🛍️ Marketplace</a>
 
   <div class="enlaces">
+    <a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
     <a routerLink="/productos" routerLinkActive="activo">Catálogo</a>
 
     @if (authService.usuarioActual(); as usuario) {

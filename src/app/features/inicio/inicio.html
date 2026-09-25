@@ -1,0 +1,37 @@
+<section class="hero">
+  <div class="hero-contenido">
+    @if (authService.usuarioActual(); as usuario) {
+      <h1>¡Hola de nuevo, {{ usuario.nombre }}!</h1>
+      <p>Descubre lo que la comunidad está vendiendo hoy o publica tus propios productos.</p>
+    } @else {
+      <h1>Compra y vende de todo, fácil y seguro</h1>
+      <p>Explora productos de otros usuarios, califica tus compras y publica lo que ya no usas.</p>
+    }
+
+    <div class="acciones">
+      <a routerLink="/productos" class="boton principal">Ver catálogo</a>
+      @if (!authService.usuarioActual()) {
+        <a routerLink="/registro" class="boton secundario">Crear cuenta gratis</a>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="destacados">
+  <div class="encabezado">
+    <h2>Últimos productos</h2>
+    <a routerLink="/productos">Ver todo el catálogo →</a>
+  </div>
+
+  @if (cargando()) {
+    <p class="info">Cargando...</p>
+  } @else if (ultimos().length === 0) {
+    <p class="info">Aún no hay productos publicados. ¡Sé el primero!</p>
+  } @else {
+    <div class="grilla">
+      @for (p of ultimos(); track p.id) {
+        <app-producto-card [producto]="p" />
+      }
+    </div>
+  }
+</section>

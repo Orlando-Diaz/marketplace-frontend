@@ -19,6 +19,7 @@ src/app/
 │ ├── models/ → interfaces TypeScript de los datos de la API
 │ └── services/ → servicios HTTP (auth, productos, categorías, carrito)
 ├── features/
+│ ├── inicio/         → página de bienvenida
 │ ├── auth/ → pantallas de login y registro
 │ └── productos/ → catálogo de productos
 └── shared/
@@ -33,6 +34,7 @@ src/app/
 - Interceptor HTTP que adjunta automáticamente el token a las peticiones
 - Barra de navegación que cambia según el estado de la sesión
 - Catálogo público de productos con paginación, precio, vendedor, calificación promedio y estado de stock
+- Página de inicio con bienvenida personalizada según la sesión y últimos productos publicados
 
 ### Pendiente
 - Detalle de producto y reseñas
