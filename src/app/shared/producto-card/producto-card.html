@@ -1,4 +1,9 @@
-<article class="tarjeta">
+<article class="tarjeta" [routerLink]="['/productos', producto().id]">
+   @if (producto().imagenes.length > 0) {
+    <img class="imagen" [src]="producto().imagenes[0]" [alt]="producto().nombre" />
+  } @else {
+    <div class="imagen sin-imagen">Sin imagen</div>
+  }
   <span class="categoria">{{ producto().categoriaNombre }}</span>
   <h3>{{ producto().nombre }}</h3>
   <p class="descripcion">{{ producto().descripcion }}</p>

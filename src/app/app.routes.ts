@@ -3,11 +3,12 @@ import { Inicio } from './features/inicio/inicio';
 import { Login } from './features/auth/login/login';
 import { Registro } from './features/auth/registro/registro';
 import { Catalogo } from './features/productos/catalogo/catalogo';
-
+import { DetalleProducto } from './features/productos/detalle-producto/detalle-producto';
 
 export const routes: Routes = [
   { path: '', component: Inicio, pathMatch: 'full' },
   { path: 'productos', component: Catalogo },
+  { path: 'productos/:id', component: DetalleProducto },
   { path: 'login', component: Login },
   { path: 'registro', component: Registro },
   { path: '**', redirectTo: '' }

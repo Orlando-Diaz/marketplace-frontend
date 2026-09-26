@@ -1,0 +1,90 @@
+<section class="detalle">
+  <a routerLink="/productos" class="volver">← Volver al catálogo</a>
+
+  @if (cargando()) {
+    <p class="info">Cargando producto...</p>
+  } @else if (error()) {
+    <p class="error">{{ error() }}</p>
+  } @else if (producto(); as p) {
+    <div class="principal">
+      <div class="info-producto">
+        @if (p.imagenes.length > 0) {
+          <img class="imagen-principal" [src]="p.imagenes[imagenActiva()]" [alt]="p.nombre" />
+
+          @if (p.imagenes.length > 1) {
+            <div class="miniaturas">
+              @for (img of p.imagenes; track $index) {
+                <img
+                  [src]="img"
+                  [class.activa]="$index === imagenActiva()"
+                  (click)="imagenActiva.set($index)"
+                />
+              }
+            </div>
+          }
+        }
+        <span class="categoria">{{ p.categoriaNombre }}</span>
+        <h1>{{ p.nombre }}</h1>
+
+        <p class="calificacion">
+          @if (p.calificacionPromedio !== null) {
+            ⭐ {{ p.calificacionPromedio | number: '1.1-1' }} · {{ p.totalResenas }} reseña(s)
+          } @else {
+            Sin reseñas todavía
+          }
+        </p>
+
+        <p class="descripcion">{{ p.descripcion }}</p>
+        <p class="vendedor">
+          Vendido por <strong>{{ p.usuarioNombre }}</strong>
+        </p>
+      </div>
+
+      <aside class="compra">
+        <p class="precio">{{ p.precio | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</p>
+
+        @if (p.stock > 0) {
+          <p class="stock">{{ p.stock }} disponible(s)</p>
+
+          <div class="cantidad">
+            <button (click)="cambiarCantidad(-1)" [disabled]="cantidad() <= 1">−</button>
+            <span>{{ cantidad() }}</span>
+            <button (click)="cambiarCantidad(1)" [disabled]="cantidad() >= p.stock">+</button>
+          </div>
+
+          <button class="agregar" (click)="agregarAlCarrito()" [disabled]="agregando()">
+            {{ agregando() ? 'Agregando...' : 'Agregar al carrito' }}
+          </button>
+
+          @if (mensajeCarrito()) {
+            <p class="exito">✓ {{ mensajeCarrito() }}</p>
+          }
+          @if (errorCarrito()) {
+            <p class="error">{{ errorCarrito() }}</p>
+          }
+        } @else {
+          <p class="agotado">Producto agotado</p>
+        }
+      </aside>
+    </div>
+
+    <div class="resenas">
+      <h2>Reseñas</h2>
+
+      @for (r of resenas(); track r.id) {
+        <div class="resena">
+          <div class="resena-encabezado">
+            <strong>{{ r.usuarioNombre }}</strong>
+            <span class="estrellas">{{ estrellas(r.calificacion) }}</span>
+          </div>
+          @if (r.comentario) {
+            <p>{{ r.comentario }}</p>
+          }
+          <small>{{ r.fecha | date: 'mediumDate' }}</small>
+        </div>
+      } @empty {
+        <p class="info">Este producto aún no tiene reseñas.</p>
+      }
+    </div>
+  }
+</section>
