@@ -12,7 +12,7 @@ import { Resena } from '../../../core/models/resena.model';
   selector: 'app-detalle-producto',
   imports: [RouterLink, CurrencyPipe, DatePipe, DecimalPipe],
   templateUrl: './detalle-producto.html',
-  styleUrl: './detalle-producto.css'
+  styleUrl: './detalle-producto.css',
 })
 export class DetalleProducto implements OnInit {
   private route = inject(ActivatedRoute);
@@ -43,13 +43,15 @@ export class DetalleProducto implements OnInit {
         this.cargando.set(false);
       },
       error: (err) => {
-        this.error.set(err.status === 404 ? 'Este producto no existe.' : 'No se pudo cargar el producto.');
+        this.error.set(
+          err.status === 404 ? 'Este producto no existe.' : 'No se pudo cargar el producto.',
+        );
         this.cargando.set(false);
-      }
+      },
     });
 
     this.resenaService.listarPorProducto(id).subscribe({
-      next: (r) => this.resenas.set(r)
+      next: (r) => this.resenas.set(r),
     });
   }
 
@@ -64,7 +66,7 @@ export class DetalleProducto implements OnInit {
   agregarAlCarrito(): void {
     // Sin sesión, lo mandamos a iniciar sesión primero
     if (!this.authService.usuarioActual()) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url } });
       return;
     }
 
@@ -83,7 +85,7 @@ export class DetalleProducto implements OnInit {
       error: (err) => {
         this.agregando.set(false);
         this.errorCarrito.set(err.error?.message ?? 'No se pudo agregar al carrito');
-      }
+      },
     });
   }
 
