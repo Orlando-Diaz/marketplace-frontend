@@ -36,13 +36,13 @@ src/app/
 - Catálogo público de productos con paginación, precio, vendedor, calificación promedio y estado de stock
 - Página de inicio con bienvenida personalizada según la sesión y últimos productos publicados
 - Detalle de producto con galería de imágenes, reseñas y selector de cantidad para agregar al carrito
+- Carrito de compras (ver items, subtotales, total y quitar productos)
+- Guard de rutas protegidas con redirección al login y retorno a la página original
 
 ### Pendiente
-- Carrito de compras
 - Checkout y gestión de direcciones
 - Historial de órdenes
 - Publicación de productos
-- Guards de rutas protegidas
 
 ## Cómo correrlo localmente
 
