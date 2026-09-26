@@ -1,0 +1,129 @@
+.carrito {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 16px 48px;
+}
+
+h1 { color: #111827; }
+
+.contenido {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .contenido { grid-template-columns: 1fr; }
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nombre {
+  color: #111827;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.nombre:hover { color: #2563eb; }
+
+.unitario { color: #6b7280; font-size: 14px; }
+
+.item-acciones {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.subtotal { font-weight: bold; color: #111827; }
+
+.quitar {
+  background: none;
+  border: 1px solid #fca5a5;
+  color: #dc2626;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.quitar:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.resumen {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 20px;
+  height: fit-content;
+}
+
+.resumen h2 { margin-top: 0; font-size: 18px; color: #111827; }
+
+.fila {
+  display: flex;
+  justify-content: space-between;
+  color: #4b5563;
+  margin-bottom: 10px;
+}
+
+.total {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 10px;
+  font-weight: bold;
+  font-size: 18px;
+  color: #111827;
+}
+
+.checkout {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px;
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.checkout:disabled { background: #86efac; cursor: not-allowed; }
+
+.nota { display: block; margin-top: 8px; color: #9ca3af; }
+
+.vacio {
+  text-align: center;
+  padding: 48px 0;
+  color: #6b7280;
+}
+
+.boton {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 20px;
+  background: #2563eb;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.info { color: #6b7280; }
+.error { color: #dc2626; }

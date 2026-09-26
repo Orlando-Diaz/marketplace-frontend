@@ -20,7 +20,7 @@ export class Catalogo implements OnInit {
   cargando = signal(false);
   error = signal<string | null>(null);
 
-  private readonly TAMANO = 8;
+  private readonly TAMANO = 16;
 
   ngOnInit(): void {
     this.cargar(0);

@@ -19,7 +19,7 @@ export class Inicio implements OnInit {
   cargando = signal(true);
 
   ngOnInit(): void {
-    this.productoService.listar(0, 4).subscribe({
+    this.productoService.listar(0, 8).subscribe({
       next: (resp) => {
         this.ultimos.set(resp.content);
         this.cargando.set(false);
