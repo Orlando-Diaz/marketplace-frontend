@@ -35,9 +35,9 @@ src/app/
 - Barra de navegación que cambia según el estado de la sesión
 - Catálogo público de productos con paginación, precio, vendedor, calificación promedio y estado de stock
 - Página de inicio con bienvenida personalizada según la sesión y últimos productos publicados
+- Detalle de producto con galería de imágenes, reseñas y selector de cantidad para agregar al carrito
 
 ### Pendiente
-- Detalle de producto y reseñas
 - Carrito de compras
 - Checkout y gestión de direcciones
 - Historial de órdenes
