@@ -12,6 +12,7 @@ export interface Producto {
   categoriaNombre: string;
   calificacionPromedio: number | null;
   totalResenas: number;
+  imagenes: string[];
 }
 
 // Respuesta paginada de Spring Data
