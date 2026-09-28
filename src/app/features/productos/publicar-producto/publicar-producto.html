@@ -1,0 +1,72 @@
+<section class="publicar">
+  <form class="tarjeta" [formGroup]="form" (ngSubmit)="publicar()">
+    <h1>Publicar un producto</h1>
+
+    <label for="nombre">Nombre</label>
+    <input id="nombre" formControlName="nombre" placeholder="Ej. Bicicleta de ruta talla M" />
+    @if (form.controls.nombre.touched && form.controls.nombre.invalid) {
+      <small class="error">El nombre es obligatorio</small>
+    }
+
+    <label for="descripcion">Descripción</label>
+    <textarea id="descripcion" rows="4" formControlName="descripcion"
+              placeholder="Estado, características, qué incluye..."></textarea>
+    @if (form.controls.descripcion.touched && form.controls.descripcion.invalid) {
+      <small class="error">La descripción es obligatoria</small>
+    }
+
+    <div class="doble">
+      <div>
+        <label for="precio">Precio (COP)</label>
+        <input id="precio" type="number" formControlName="precio" />
+        @if (form.controls.precio.touched && form.controls.precio.invalid) {
+          <small class="error">Debe ser mayor a 0</small>
+        }
+      </div>
+      <div>
+        <label for="stock">Unidades disponibles</label>
+        <input id="stock" type="number" formControlName="stock" />
+        @if (form.controls.stock.touched && form.controls.stock.invalid) {
+          <small class="error">No puede ser negativo</small>
+        }
+      </div>
+    </div>
+
+    <label for="categoria">Categoría</label>
+    <select id="categoria" formControlName="categoriaId">
+      <option [ngValue]="0" disabled>Selecciona una categoría</option>
+      @for (c of categorias(); track c.id) {
+        <option [ngValue]="c.id">{{ c.etiqueta }}</option>
+      }
+    </select>
+    @if (form.controls.categoriaId.touched && form.controls.categoriaId.invalid) {
+      <small class="error">Selecciona una categoría</small>
+    }
+
+    <label>Imágenes (URLs, máximo {{ MAX_IMAGENES }})</label>
+    <div formArrayName="imagenes" class="imagenes">
+      @for (control of imagenes.controls; track $index; let i = $index) {
+        <div class="fila-imagen">
+          @if (control.value) {
+            <img [src]="control.value" alt="Vista previa" class="preview" />
+          } @else {
+            <div class="preview vacia">🖼️</div>
+          }
+          <input [formControlName]="i" placeholder="https://..." />
+          <button type="button" class="quitar" (click)="quitarImagen(i)">✕</button>
+        </div>
+      }
+    </div>
+    @if (imagenes.length < MAX_IMAGENES) {
+      <button type="button" class="agregar" (click)="agregarImagen()">+ Agregar otra imagen</button>
+    }
+
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    <button type="submit" class="publicar-btn" [disabled]="publicando()">
+      {{ publicando() ? 'Publicando...' : 'Publicar producto' }}
+    </button>
+  </form>
+</section>
