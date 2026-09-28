@@ -4,3 +4,9 @@ export interface Categoria {
   descripcion: string | null;
   categoriaPadreId: number | null;
 }
+
+export interface CategoriaRequest {
+  nombre: string;
+  descripcion: string;
+  categoriaPadreId: number | null;
+}

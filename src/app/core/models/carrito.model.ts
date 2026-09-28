@@ -17,3 +17,9 @@ export interface ItemCarritoRequest {
   productoId: number;
   cantidad: number;
 }
+
+export interface CategoriaRequest {
+  nombre: string;
+  descripcion: string;
+  categoriaPadreId: number | null;
+}

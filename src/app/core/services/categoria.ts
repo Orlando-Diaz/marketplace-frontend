@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Categoria } from '../models/categoria.model';
 import { Observable, map } from 'rxjs';
+import { Categoria, CategoriaRequest } from '../models/categoria.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +26,17 @@ export class CategoriaService {
         .sort((a, b) => a.etiqueta.localeCompare(b.etiqueta));
     })
   );
+}
+
+crear(request: CategoriaRequest): Observable<Categoria> {
+  return this.http.post<Categoria>(this.API_URL, request);
+}
+
+actualizar(id: number, request: CategoriaRequest): Observable<Categoria> {
+  return this.http.put<Categoria>(`${this.API_URL}/${id}`, request);
+}
+
+eliminar(id: number): Observable<void> {
+  return this.http.delete<void>(`${this.API_URL}/${id}`);
 }
 }

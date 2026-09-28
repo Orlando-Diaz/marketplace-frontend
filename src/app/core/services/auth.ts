@@ -1,7 +1,7 @@
-import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { AuthResponse, LoginRequest, RegistroRequest } from '../models/usuario.model';
+import { Injectable, computed, signal } from '@angular/core'
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +36,8 @@ export class AuthService {
   estaAutenticado(): boolean {
     return this.obtenerToken() !== null;
   }
+
+  esAdmin = computed(() => this.usuarioActual()?.rol === 'ADMIN');
 
   private guardarSesion(response: AuthResponse): void {
     localStorage.setItem(this.TOKEN_KEY, JSON.stringify(response));
