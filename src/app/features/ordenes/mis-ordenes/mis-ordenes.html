@@ -1,0 +1,45 @@
+<section class="ordenes">
+  <h1>Mis compras</h1>
+
+  @if (ordenNueva()) {
+    <div class="exito">
+      ✅ ¡Compra confirmada! Tu orden <strong>#{{ ordenNueva() }}</strong> fue pagada con éxito.
+      Te enviamos un correo con el resumen.
+    </div>
+  }
+
+  @if (cargando()) {
+    <p class="info">Cargando tus compras...</p>
+  } @else if (error()) {
+    <p class="error">{{ error() }}</p>
+  } @else {
+    @for (o of ordenes(); track o.id) {
+      <article class="orden" [class.destacada]="o.id === ordenNueva()">
+        <header>
+          <div>
+            <h2>Orden #{{ o.id }}</h2>
+            <small>{{ o.fecha | date:'medium' }}</small>
+          </div>
+          <span class="estado" [class]="'estado ' + o.estado.toLowerCase()">{{ o.estado }}</span>
+        </header>
+
+        @for (item of o.items; track item.productoId) {
+          <div class="fila-item">
+            <a [routerLink]="['/productos', item.productoId]">{{ item.productoNombre }}</a>
+            <span>{{ item.cantidad }} × {{ item.precioUnitario | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
+          </div>
+        }
+
+        <footer>
+          <span class="envio">📦 {{ o.direccionEnvio.calle }}, {{ o.direccionEnvio.ciudad }}</span>
+          <strong>{{ o.total | currency:'COP':'symbol-narrow':'1.0-0' }}</strong>
+        </footer>
+      </article>
+    } @empty {
+      <div class="vacio">
+        <p>Aún no has hecho ninguna compra.</p>
+        <a routerLink="/productos" class="boton">Explorar productos</a>
+      </div>
+    }
+  }
+</section>

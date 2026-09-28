@@ -5,6 +5,8 @@ import { Registro } from './features/auth/registro/registro';
 import { Catalogo } from './features/productos/catalogo/catalogo';
 import { DetalleProducto } from './features/productos/detalle-producto/detalle-producto';
 import { CarritoPage } from './features/carrito/carrito-page/carrito-page';
+import { CheckoutPage } from './features/checkout/checkout-page/checkout-page';
+import { MisOrdenes } from './features/ordenes/mis-ordenes/mis-ordenes';
 import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
@@ -14,5 +16,7 @@ export const routes: Routes = [
   { path: 'login', component: Login },
   { path: 'registro', component: Registro },
   { path: 'carrito', component: CarritoPage, canActivate: [authGuard] },
+  { path: 'checkout', component: CheckoutPage, canActivate: [authGuard] },
+  { path: 'ordenes', component: MisOrdenes, canActivate: [authGuard] },
   { path: '**', redirectTo: '' }
 ];

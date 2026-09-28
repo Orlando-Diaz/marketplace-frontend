@@ -43,8 +43,7 @@
             <span>Total</span>
             <span>{{ c.total | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
           </div>
-          <button class="checkout" disabled>Continuar al pago</button>
-          <small class="nota">El checkout lo conectamos en el siguiente paso.</small>
+          <a routerLink="/checkout" class="checkout">Continuar al pago</a>
         </aside>
       </div>
     }

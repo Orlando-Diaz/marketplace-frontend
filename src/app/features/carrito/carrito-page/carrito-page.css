@@ -102,6 +102,9 @@ h1 { color: #111827; }
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
+  display: block;
+  text-align: center;
+  text-decoration: none;
 }
 
 .checkout:disabled { background: #86efac; cursor: not-allowed; }
