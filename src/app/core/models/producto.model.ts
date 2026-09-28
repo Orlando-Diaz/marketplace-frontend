@@ -19,7 +19,17 @@ export interface Producto {
 export interface PaginaProductos {
   content: Producto[];
   totalPages?: number;
-  page?: { totalPages: number; number: number };
+  totalElements?: number;
+  page?: { totalPages: number; totalElements: number; number: number };
+}
+
+export interface FiltrosProductos {
+  q?: string;
+  categoriaId?: number;
+  precioMin?: number | null;
+  precioMax?: number | null;
+  soloDisponibles?: boolean;
+  orden?: string;
 }
 
 export interface ProductoRequest {
