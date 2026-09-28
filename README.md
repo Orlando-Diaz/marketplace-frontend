@@ -25,6 +25,19 @@ src/app/
 └── shared/
 └── navbar/ → barra de navegación global
 
+## 🚀 Probar la app
+
+**Demo en vivo:** _(enlace disponible tras el despliegue)_
+
+Puedes explorar la app sin registrarte, usando las cuentas de demostración (también hay botones de acceso rápido en la pantalla de login):
+
+| Rol | Correo | Contraseña | Qué puedes probar |
+|-----|--------|------------|-------------------|
+| Comprador / vendedor | `demo@marketplace.com` | `demo1234` | Carrito, checkout, historial de compras, reseñas, publicar y editar productos |
+| Administrador | `admin@marketplace.com` | `admin1234` | Todo lo anterior + panel de administración de categorías (⚙️ Admin) |
+
+> Las reglas de negocio del backend protegen la integridad de los datos: por ejemplo, no se puede eliminar una categoría que tenga productos o subcategorías.
+
 
 ## Funcionalidades
 

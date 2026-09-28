@@ -19,25 +19,46 @@
         <div class="auth-error">{{ error() }}</div>
       }
 
-      <div class="campo" [class.invalido]="form.controls.email.touched && form.controls.email.invalid">
+      <div
+        class="campo"
+        [class.invalido]="form.controls.email.touched && form.controls.email.invalid"
+      >
         <label for="email">Correo electrónico</label>
         <div class="campo-input">
           <span class="icono">✉️</span>
-          <input id="email" type="email" formControlName="email" placeholder="tu@correo.com" autocomplete="email" />
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="tu@correo.com"
+            autocomplete="email"
+          />
         </div>
         @if (form.controls.email.touched && form.controls.email.invalid) {
           <small>Ingresa un correo válido</small>
         }
       </div>
 
-      <div class="campo" [class.invalido]="form.controls.password.touched && form.controls.password.invalid">
+      <div
+        class="campo"
+        [class.invalido]="form.controls.password.touched && form.controls.password.invalid"
+      >
         <label for="password">Contraseña</label>
         <div class="campo-input">
           <span class="icono">🔒</span>
-          <input id="password" class="con-boton" formControlName="password"
-                 [type]="mostrarPassword() ? 'text' : 'password'"
-                 placeholder="Tu contraseña" autocomplete="current-password" />
-          <button type="button" class="ver-password" (click)="mostrarPassword.set(!mostrarPassword())">
+          <input
+            id="password"
+            class="con-boton"
+            formControlName="password"
+            [type]="mostrarPassword() ? 'text' : 'password'"
+            placeholder="Tu contraseña"
+            autocomplete="current-password"
+          />
+          <button
+            type="button"
+            class="ver-password"
+            (click)="mostrarPassword.set(!mostrarPassword())"
+          >
             {{ mostrarPassword() ? 'Ocultar' : 'Mostrar' }}
           </button>
         </div>
@@ -54,6 +75,16 @@
         }
       </button>
 
+      <div class="demo">
+        <span class="separador">o prueba la app con una cuenta demo</span>
+        <div class="demo-botones">
+          @for (cuenta of cuentasDemo; track cuenta.email) {
+            <button type="button" (click)="entrarComoDemo(cuenta)" [disabled]="cargando()">
+              {{ cuenta.etiqueta }}
+            </button>
+          }
+        </div>
+      </div>
       <p class="auth-pie">¿No tienes cuenta? <a routerLink="/registro">Crea una gratis</a></p>
     </form>
   </div>

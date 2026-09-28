@@ -19,6 +19,11 @@ export class Login {
   error = signal<string | null>(null);
   mostrarPassword = signal(false);
 
+  readonly cuentasDemo = [
+    { etiqueta: '🛍️ Comprador / vendedor', email: 'demo@marketplace.com', password: 'demo1234' },
+    { etiqueta: '⚙️ Administrador', email: 'admin@marketplace.com', password: 'admin1234' },
+  ];
+
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
@@ -44,5 +49,10 @@ export class Login {
         this.error.set(err.error?.message ?? 'Email o contraseña incorrectos');
       },
     });
+  }
+
+  entrarComoDemo(cuenta: { email: string; password: string }): void {
+    this.form.setValue({ email: cuenta.email, password: cuenta.password });
+    this.enviar();
   }
 }
