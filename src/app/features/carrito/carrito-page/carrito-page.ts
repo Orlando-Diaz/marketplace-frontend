@@ -8,7 +8,7 @@ import { Carrito } from '../../../core/models/carrito.model';
   selector: 'app-carrito-page',
   imports: [CurrencyPipe, RouterLink],
   templateUrl: './carrito-page.html',
-  styleUrl: './carrito-page.css'
+  styleUrl: './carrito-page.css',
 })
 export class CarritoPage implements OnInit {
   private carritoService = inject(CarritoService);
@@ -27,7 +27,7 @@ export class CarritoPage implements OnInit {
       error: () => {
         this.error.set('No se pudo cargar tu carrito.');
         this.cargando.set(false);
-      }
+      },
     });
   }
 
@@ -42,7 +42,25 @@ export class CarritoPage implements OnInit {
       error: (err) => {
         this.error.set(err.error?.message ?? 'No se pudo quitar el producto.');
         this.quitandoId.set(null);
-      }
+      },
+    });
+  }
+
+  actualizandoId = signal<number | null>(null);
+
+  cambiarCantidad(itemId: number, cantidad: number): void {
+    this.actualizandoId.set(itemId);
+    this.error.set(null);
+
+    this.carritoService.actualizarCantidad(itemId, cantidad).subscribe({
+      next: (c) => {
+        this.carrito.set(c);
+        this.actualizandoId.set(null);
+      },
+      error: (err) => {
+        this.error.set(err.error?.message ?? 'No se pudo actualizar la cantidad.');
+        this.actualizandoId.set(null);
+      },
     });
   }
 }

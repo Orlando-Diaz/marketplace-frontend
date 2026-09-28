@@ -1,10 +1,12 @@
 <section class="carrito">
   <h1>Mi carrito</h1>
 
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
+
   @if (cargando()) {
     <p class="info">Cargando tu carrito...</p>
-  } @else if (error()) {
-    <p class="error">{{ error() }}</p>
   } @else if (carrito(); as c) {
     @if (c.items.length === 0) {
       <div class="vacio">
@@ -18,9 +20,15 @@
             <div class="item">
               <div class="item-info">
                 <a [routerLink]="['/productos', item.productoId]" class="nombre">{{ item.productoNombre }}</a>
-                <span class="unitario">
-                  {{ item.productoPrecio | currency:'COP':'symbol-narrow':'1.0-0' }} × {{ item.cantidad }}
-                </span>
+                <span class="unitario">{{ item.productoPrecio | currency:'COP':'symbol-narrow':'1.0-0' }} c/u</span>
+
+                <div class="cantidad">
+                  <button (click)="cambiarCantidad(item.id, item.cantidad - 1)"
+                          [disabled]="item.cantidad <= 1 || actualizandoId() === item.id">−</button>
+                  <span>{{ item.cantidad }}</span>
+                  <button (click)="cambiarCantidad(item.id, item.cantidad + 1)"
+                          [disabled]="item.cantidad >= item.productoStock || actualizandoId() === item.id">+</button>
+                </div>
               </div>
 
               <div class="item-acciones">

@@ -128,5 +128,24 @@ h1 { color: #111827; }
   font-weight: bold;
 }
 
+.cantidad {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.cantidad button {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #d1d5db;
+  background: white;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.cantidad button:disabled { opacity: 0.4; cursor: not-allowed; }
+
 .info { color: #6b7280; }
 .error { color: #dc2626; }
