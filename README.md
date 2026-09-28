@@ -38,11 +38,14 @@ src/app/
 - Detalle de producto con galería de imágenes, reseñas y selector de cantidad para agregar al carrito
 - Carrito de compras (ver items, subtotales, total y quitar productos)
 - Guard de rutas protegidas con redirección al login y retorno a la página original
+- Checkout y gestión de direcciones
+- Historial de compras con estado, detalle de items y dirección de envío
+- Publicación de productos con categoría, stock y hasta 5 imágenes con vista previa
+- Reseñas con calificación de 1 a 5 estrellas desde el historial de compras
 
 ### Pendiente
-- Checkout y gestión de direcciones
-- Historial de órdenes
-- Publicación de productos
+- Filtros de búsqueda en el catálogo
+- Panel de administración de categorías
 
 ## Cómo correrlo localmente
 
