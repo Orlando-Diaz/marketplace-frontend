@@ -1,0 +1,71 @@
+<section class="admin">
+  <h1>⚙️ Administrar categorías</h1>
+
+  @if (mensaje(); as m) {
+    <p class="mensaje" [class.ok]="m.ok" [class.fallo]="!m.ok">{{ m.texto }}</p>
+  }
+
+  <div class="contenido">
+    <form class="tarjeta" [formGroup]="form" (ngSubmit)="guardar()">
+      <h2>{{ editandoId() ? 'Editar categoría' : 'Nueva categoría' }}</h2>
+
+      <label for="nombre">Nombre</label>
+      <input id="nombre" formControlName="nombre" />
+      @if (form.controls.nombre.touched && form.controls.nombre.invalid) {
+        <small class="error">El nombre es obligatorio</small>
+      }
+
+      <label for="descripcion">Descripción</label>
+      <input id="descripcion" formControlName="descripcion" />
+
+      <label for="padre">Categoría padre</label>
+      <select id="padre" formControlName="categoriaPadreId">
+        <option [ngValue]="0">Ninguna (categoría principal)</option>
+        @for (c of opcionesPadre(); track c.id) {
+          <option [ngValue]="c.id">{{ c.nombre }}</option>
+        }
+      </select>
+
+      <div class="acciones">
+        <button type="submit" [disabled]="guardando()">
+          {{ guardando() ? 'Guardando...' : (editandoId() ? 'Guardar cambios' : 'Crear categoría') }}
+        </button>
+        @if (editandoId()) {
+          <button type="button" class="secundario" (click)="cancelarEdicion()">Cancelar</button>
+        }
+      </div>
+    </form>
+
+    <div class="tarjeta lista">
+      <h2>Categorías ({{ categorias().length }})</h2>
+
+      @for (raiz of arbol(); track raiz.id) {
+        <div class="fila" [class.editando]="editandoId() === raiz.id">
+          <div>
+            <strong>{{ raiz.nombre }}</strong>
+            @if (raiz.descripcion) { <small>{{ raiz.descripcion }}</small> }
+          </div>
+          <div class="botones">
+            <button class="editar" (click)="editar(raiz)">Editar</button>
+            <button class="borrar" (click)="eliminar(raiz)">Eliminar</button>
+          </div>
+        </div>
+
+        @for (hija of raiz.hijas; track hija.id) {
+          <div class="fila hija" [class.editando]="editandoId() === hija.id">
+            <div>
+              <span>↳ {{ hija.nombre }}</span>
+              @if (hija.descripcion) { <small>{{ hija.descripcion }}</small> }
+            </div>
+            <div class="botones">
+              <button class="editar" (click)="editar(hija)">Editar</button>
+              <button class="borrar" (click)="eliminar(hija)">Eliminar</button>
+            </div>
+          </div>
+        }
+      } @empty {
+        <p class="info">No hay categorías todavía.</p>
+      }
+    </div>
+  </div>
+</section>

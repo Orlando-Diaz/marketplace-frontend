@@ -9,6 +9,8 @@ import { CarritoPage } from './features/carrito/carrito-page/carrito-page';
 import { CheckoutPage } from './features/checkout/checkout-page/checkout-page';
 import { MisOrdenes } from './features/ordenes/mis-ordenes/mis-ordenes';
 import { authGuard } from './core/guards/auth-guard';
+import { AdminCategorias } from './features/admin/admin-categorias/admin-categorias';
+import { adminGuard } from './core/guards/admin-guard';
 
 export const routes: Routes = [
   { path: '', component: Inicio, pathMatch: 'full' },
@@ -20,5 +22,6 @@ export const routes: Routes = [
   { path: 'carrito', component: CarritoPage, canActivate: [authGuard] },
   { path: 'checkout', component: CheckoutPage, canActivate: [authGuard] },
   { path: 'ordenes', component: MisOrdenes, canActivate: [authGuard] },
+  { path: 'admin/categorias', component: AdminCategorias, canActivate: [adminGuard] },
   { path: '**', redirectTo: '' }
 ];

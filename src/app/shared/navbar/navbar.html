@@ -11,6 +11,9 @@
       <a routerLink="/productos/publicar" class="boton">+ Vender</a>
       <a routerLink="/carrito" routerLinkActive="activo">🛒 Carrito</a>
       ...
+      @if (authService.esAdmin()) {
+        <a routerLink="/admin/categorias" routerLinkActive="activo">⚙️ Admin</a>
+      }
       <span class="usuario">Hola, {{ usuario.nombre }}</span>
       <button (click)="cerrarSesion()">Cerrar sesión</button>
     } @else {
