@@ -11,6 +11,7 @@ import { MisOrdenes } from './features/ordenes/mis-ordenes/mis-ordenes';
 import { authGuard } from './core/guards/auth-guard';
 import { AdminCategorias } from './features/admin/admin-categorias/admin-categorias';
 import { adminGuard } from './core/guards/admin-guard';
+import { MisProductos } from './features/productos/mis-productos/mis-productos';
 
 export const routes: Routes = [
   { path: '', component: Inicio, pathMatch: 'full' },
@@ -23,5 +24,7 @@ export const routes: Routes = [
   { path: 'checkout', component: CheckoutPage, canActivate: [authGuard] },
   { path: 'ordenes', component: MisOrdenes, canActivate: [authGuard] },
   { path: 'admin/categorias', component: AdminCategorias, canActivate: [adminGuard] },
-  { path: '**', redirectTo: '' }
+  { path: 'productos/:id/editar', component: PublicarProducto, canActivate: [authGuard] },
+  { path: 'mis-productos', component: MisProductos, canActivate: [authGuard] },
+  { path: '**', redirectTo: '' },
 ];

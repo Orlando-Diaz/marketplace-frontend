@@ -1,21 +1,29 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ProductoService } from '../../../core/services/producto';
 import { CategoriaService } from '../../../core/services/categoria';
 import { Categoria } from '../../../core/models/categoria.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-publicar-producto',
   imports: [ReactiveFormsModule],
   templateUrl: './publicar-producto.html',
-  styleUrl: './publicar-producto.css'
+  styleUrl: './publicar-producto.css',
 })
 export class PublicarProducto implements OnInit {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private productoService = inject(ProductoService);
   private categoriaService = inject(CategoriaService);
+  private route = inject(ActivatedRoute);
+  editandoId = signal<number | null>(null);
 
   categorias = signal<{ id: number; etiqueta: string }[]>([]);
   publicando = signal(false);
@@ -29,7 +37,7 @@ export class PublicarProducto implements OnInit {
     precio: [0, [Validators.required, Validators.min(1)]],
     stock: [1, [Validators.required, Validators.min(0)]],
     categoriaId: [0, Validators.min(1)],
-    imagenes: this.fb.array<FormControl<string>>([])
+    imagenes: this.fb.array<FormControl<string>>([]),
   });
 
   get imagenes(): FormArray<FormControl<string>> {
@@ -37,9 +45,31 @@ export class PublicarProducto implements OnInit {
   }
 
   ngOnInit(): void {
-  this.agregarImagen();
-  this.categoriaService.listarConEtiquetas().subscribe(c => this.categorias.set(c));
-}
+    this.categoriaService.listarConEtiquetas().subscribe((c) => this.categorias.set(c));
+
+    const id = this.route.snapshot.paramMap.get('id');
+    if (!id) {
+      this.agregarImagen();
+      return;
+    }
+
+    this.editandoId.set(Number(id));
+    this.productoService.obtenerPorId(Number(id)).subscribe({
+      next: (p) => {
+        this.form.patchValue({
+          nombre: p.nombre,
+          descripcion: p.descripcion,
+          precio: p.precio,
+          stock: p.stock,
+          categoriaId: p.categoriaId,
+        });
+        this.imagenes.clear();
+        p.imagenes.forEach((url) => this.imagenes.push(this.fb.nonNullable.control(url)));
+        if (p.imagenes.length === 0) this.agregarImagen();
+      },
+      error: () => this.error.set('No se pudo cargar el producto a editar.'),
+    });
+  }
 
   agregarImagen(): void {
     if (this.imagenes.length < this.MAX_IMAGENES) {
@@ -63,18 +93,25 @@ export class PublicarProducto implements OnInit {
     const valores = this.form.getRawValue();
     const request = {
       ...valores,
-      imagenes: valores.imagenes.map(u => u.trim()).filter(u => u.length > 0)
+      imagenes: valores.imagenes.map((u) => u.trim()).filter((u) => u.length > 0),
     };
 
-    this.productoService.crear(request).subscribe({
+    const id = this.editandoId();
+    const operacion = id
+      ? this.productoService.actualizar(id, request)
+      : this.productoService.crear(request);
+
+    operacion.subscribe({
       next: (producto) => this.router.navigate(['/productos', producto.id]),
       error: (err) => {
         this.publicando.set(false);
         this.error.set(
           err.error?.message ??
-          (err.error?.errores ? Object.values(err.error.errores).join('. ') : 'No se pudo publicar el producto')
+            (err.error?.errores
+              ? Object.values(err.error.errores).join('. ')
+              : 'No se pudo publicar el producto'),
         );
-      }
+      },
     });
   }
 }

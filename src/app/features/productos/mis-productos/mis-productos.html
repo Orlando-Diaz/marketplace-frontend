@@ -1,0 +1,47 @@
+<section class="mis-productos">
+  <div class="encabezado">
+    <h1>Mis productos</h1>
+    <a routerLink="/productos/publicar" class="boton">+ Publicar producto</a>
+  </div>
+
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
+
+  @if (cargando()) {
+    <p class="info">Cargando tus productos...</p>
+  } @else {
+    @for (p of productos(); track p.id) {
+      <div class="fila" [class.pausado]="p.estado !== 'DISPONIBLE'">
+        @if (p.imagenes.length > 0) {
+          <img [src]="p.imagenes[0]" [alt]="p.nombre" />
+        } @else {
+          <div class="sin-imagen">🖼️</div>
+        }
+
+        <div class="info-producto">
+          <a [routerLink]="['/productos', p.id]" class="nombre">{{ p.nombre }}</a>
+          <span class="detalle">
+            {{ p.precio | currency:'COP':'symbol-narrow':'1.0-0' }} · {{ p.stock }} en stock · {{ p.categoriaNombre }}
+          </span>
+        </div>
+
+        <span class="estado" [class.activo]="p.estado === 'DISPONIBLE'">
+          {{ p.estado === 'DISPONIBLE' ? 'Activo' : 'Pausado' }}
+        </span>
+
+        <div class="acciones">
+          <a [routerLink]="['/productos', p.id, 'editar']" class="editar">Editar</a>
+          <button (click)="alternarEstado(p)" [disabled]="cambiandoId() === p.id">
+            {{ p.estado === 'DISPONIBLE' ? 'Pausar' : 'Activar' }}
+          </button>
+        </div>
+      </div>
+    } @empty {
+      <div class="vacio">
+        <p>Aún no has publicado productos.</p>
+        <a routerLink="/productos/publicar" class="boton">Publicar mi primer producto</a>
+      </div>
+    }
+  }
+</section>

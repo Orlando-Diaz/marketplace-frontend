@@ -2,15 +2,14 @@
   <a routerLink="/" class="marca">🛍️ Marketplace</a>
 
   <div class="enlaces">
-    <a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }"
-      >Inicio</a
-    >
+    <a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
     <a routerLink="/productos" routerLinkActive="activo">Catálogo</a>
 
     @if (authService.usuarioActual(); as usuario) {
       <a routerLink="/productos/publicar" class="boton">+ Vender</a>
       <a routerLink="/carrito" routerLinkActive="activo">🛒 Carrito</a>
-      ...
+      <a routerLink="/ordenes" routerLinkActive="activo">Mis compras</a>
+      <a routerLink="/mis-productos" routerLinkActive="activo">Mis productos</a>
       @if (authService.esAdmin()) {
         <a routerLink="/admin/categorias" routerLinkActive="activo">⚙️ Admin</a>
       }
