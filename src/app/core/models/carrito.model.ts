@@ -5,6 +5,7 @@ export interface ItemCarrito {
   productoPrecio: number;
   cantidad: number;
   subtotal: number;
+  productoStock: number;
 }
 
 export interface Carrito {
@@ -16,10 +17,4 @@ export interface Carrito {
 export interface ItemCarritoRequest {
   productoId: number;
   cantidad: number;
-}
-
-export interface CategoriaRequest {
-  nombre: string;
-  descripcion: string;
-  categoriaPadreId: number | null;
 }

@@ -32,4 +32,16 @@ export class ProductoService {
   crear(request: ProductoRequest): Observable<Producto> {
     return this.http.post<Producto>(this.API_URL, request);
 }
+
+misProductos(): Observable<Producto[]> {
+  return this.http.get<Producto[]>(`${this.API_URL}/mis-productos`);
+}
+
+actualizar(id: number, request: ProductoRequest): Observable<Producto> {
+  return this.http.put<Producto>(`${this.API_URL}/${id}`, request);
+}
+
+cambiarEstado(id: number, activo: boolean): Observable<Producto> {
+  return this.http.patch<Producto>(`${this.API_URL}/${id}/estado`, null, { params: { activo } });
+}
 }
