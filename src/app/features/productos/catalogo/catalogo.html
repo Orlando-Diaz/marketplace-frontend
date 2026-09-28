@@ -1,23 +1,77 @@
 <section class="catalogo">
-  <h1>Catálogo</h1>
+  <aside class="filtros" [formGroup]="filtros">
+    <h2>Filtros</h2>
 
-  @if (cargando()) {
-    <p class="info">Cargando productos...</p>
-  } @else if (error()) {
-    <p class="error">{{ error() }}</p>
-  } @else if (productos().length === 0) {
-    <p class="info">Aún no hay productos publicados.</p>
-  } @else {
-    <div class="grilla">
-      @for (p of productos(); track p.id) {
-        <app-producto-card [producto]="p" />
+    <label for="q">Buscar</label>
+    <input id="q" formControlName="q" placeholder="¿Qué estás buscando?" />
+
+    <label for="categoria">Categoría</label>
+    <select id="categoria" formControlName="categoriaId">
+      <option [ngValue]="0">Todas</option>
+      @for (c of categorias(); track c.id) {
+        <option [ngValue]="c.id">{{ c.etiqueta }}</option>
       }
+    </select>
+
+    <label>Precio (COP)</label>
+    <div class="rango">
+      <input type="number" formControlName="precioMin" placeholder="Mín." />
+      <span>–</span>
+      <input type="number" formControlName="precioMax" placeholder="Máx." />
     </div>
 
-    <div class="paginacion">
-      <button [disabled]="pagina() === 0" (click)="cargar(pagina() - 1)">← Anterior</button>
-      <span>Página {{ pagina() + 1 }} de {{ totalPaginas() }}</span>
-      <button [disabled]="pagina() + 1 >= totalPaginas()" (click)="cargar(pagina() + 1)">Siguiente →</button>
+    <label class="check">
+      <input type="checkbox" formControlName="soloDisponibles" />
+      Solo con stock
+    </label>
+
+    @if (hayFiltrosActivos()) {
+      <button type="button" class="limpiar" (click)="limpiarFiltros()">Limpiar filtros</button>
+    }
+  </aside>
+
+  <div class="resultados">
+    <div class="barra" [formGroup]="filtros">
+      <h1>Catálogo</h1>
+      <div class="barra-derecha">
+        @if (!cargando()) {
+          <span class="conteo">{{ totalResultados() }} resultado(s)</span>
+        }
+        <select formControlName="orden">
+          <option value="recientes">Más recientes</option>
+          <option value="precio_asc">Precio: menor a mayor</option>
+          <option value="precio_desc">Precio: mayor a menor</option>
+        </select>
+      </div>
     </div>
-  }
+
+    @if (cargando()) {
+      <p class="info">Buscando productos...</p>
+    } @else if (error()) {
+      <p class="error">{{ error() }}</p>
+    } @else if (productos().length === 0) {
+      <div class="vacio">
+        @if (hayFiltrosActivos()) {
+          <p>No encontramos productos con esos filtros.</p>
+          <button type="button" class="limpiar" (click)="limpiarFiltros()">Limpiar filtros</button>
+        } @else {
+          <p>Aún no hay productos publicados.</p>
+        }
+      </div>
+    } @else {
+      <div class="grilla">
+        @for (p of productos(); track p.id) {
+          <app-producto-card [producto]="p" />
+        }
+      </div>
+
+      @if (totalPaginas() > 1) {
+        <div class="paginacion">
+          <button [disabled]="pagina() === 0" (click)="cargar(pagina() - 1)">← Anterior</button>
+          <span>Página {{ pagina() + 1 }} de {{ totalPaginas() }}</span>
+          <button [disabled]="pagina() + 1 >= totalPaginas()" (click)="cargar(pagina() + 1)">Siguiente →</button>
+        </div>
+      }
+    }
+  </div>
 </section>

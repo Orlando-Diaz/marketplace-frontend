@@ -1,14 +1,86 @@
 .catalogo {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 32px 16px;
+  padding: 32px 16px 48px;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 28px;
+  align-items: start;
 }
 
-h1 { color: #111827; }
+@media (max-width: 800px) {
+  .catalogo { grid-template-columns: 1fr; }
+}
+
+.filtros {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: sticky;
+  top: 16px;
+}
+
+.filtros h2 { margin: 0 0 4px; font-size: 18px; color: #111827; }
+
+.filtros label { font-size: 13px; font-weight: bold; color: #374151; margin-top: 8px; }
+
+.filtros input:not([type="checkbox"]), .filtros select, .barra select {
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.rango { display: flex; align-items: center; gap: 6px; }
+
+.rango span { color: #9ca3af; }
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: normal !important;
+  cursor: pointer;
+}
+
+.limpiar {
+  margin-top: 10px;
+  background: white;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  padding: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.barra {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.barra h1 { margin: 0; color: #111827; }
+
+.barra-derecha { display: flex; align-items: center; gap: 12px; }
+
+.barra select { width: auto; }
+
+.conteo { color: #6b7280; font-size: 14px; white-space: nowrap; }
 
 .grilla {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   gap: 20px;
 }
 
@@ -29,6 +101,10 @@ h1 { color: #111827; }
 }
 
 .paginacion button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.vacio { text-align: center; padding: 48px 0; color: #6b7280; }
+
+.vacio .limpiar { width: auto; padding: 8px 18px; }
 
 .info { color: #6b7280; }
 .error { color: #dc2626; }

@@ -37,20 +37,9 @@ export class PublicarProducto implements OnInit {
   }
 
   ngOnInit(): void {
-    this.agregarImagen();
-
-    this.categoriaService.listar().subscribe(lista => {
-      const nombres = new Map(lista.map(c => [c.id, c.nombre]));
-      this.categorias.set(
-        lista
-          .map(c => ({
-            id: c.id,
-            etiqueta: c.categoriaPadreId ? `${nombres.get(c.categoriaPadreId)} › ${c.nombre}` : c.nombre
-          }))
-          .sort((a, b) => a.etiqueta.localeCompare(b.etiqueta))
-      );
-    });
-  }
+  this.agregarImagen();
+  this.categoriaService.listarConEtiquetas().subscribe(c => this.categorias.set(c));
+}
 
   agregarImagen(): void {
     if (this.imagenes.length < this.MAX_IMAGENES) {
