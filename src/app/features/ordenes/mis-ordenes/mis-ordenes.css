@@ -85,5 +85,72 @@ footer strong { font-size: 18px; color: #111827; }
   font-weight: bold;
 }
 
+.item { border-bottom: 1px solid #f9fafb; padding: 4px 0; }
+
+.derecha { display: flex; align-items: center; gap: 12px; }
+
+.resenar {
+  background: #fef3c7;
+  color: #92400e;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.form-resena {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 8px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.estrellas button {
+  background: none;
+  border: none;
+  font-size: 26px;
+  color: #d1d5db;
+  cursor: pointer;
+  padding: 0 2px;
+}
+
+.estrellas button.activa { color: #f59e0b; }
+
+.form-resena textarea {
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-family: inherit;
+}
+
+.acciones { display: flex; gap: 8px; }
+
+.enviar {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.enviar:disabled { background: #93c5fd; cursor: not-allowed; }
+
+.cancelar {
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.ok { color: #16a34a; font-size: 14px; margin: 4px 0; }
+
 .info { color: #6b7280; }
 .error { color: #dc2626; }

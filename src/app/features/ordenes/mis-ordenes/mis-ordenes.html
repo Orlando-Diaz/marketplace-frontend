@@ -3,8 +3,8 @@
 
   @if (ordenNueva()) {
     <div class="exito">
-      ✅ ¡Compra confirmada! Tu orden <strong>#{{ ordenNueva() }}</strong> fue pagada con éxito.
-      Te enviamos un correo con el resumen.
+      ✅ ¡Compra confirmada! Tu orden <strong>#{{ ordenNueva() }}</strong> fue pagada con éxito. Te
+      enviamos un correo con el resumen.
     </div>
   }
 
@@ -18,21 +18,66 @@
         <header>
           <div>
             <h2>Orden #{{ o.id }}</h2>
-            <small>{{ o.fecha | date:'medium' }}</small>
+            <small>{{ o.fecha | date: 'medium' }}</small>
           </div>
           <span class="estado" [class]="'estado ' + o.estado.toLowerCase()">{{ o.estado }}</span>
         </header>
 
         @for (item of o.items; track item.productoId) {
-          <div class="fila-item">
-            <a [routerLink]="['/productos', item.productoId]">{{ item.productoNombre }}</a>
-            <span>{{ item.cantidad }} × {{ item.precioUnitario | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
+          <div class="item">
+            <div class="fila-item">
+              <a [routerLink]="['/productos', item.productoId]">{{ item.productoNombre }}</a>
+              <div class="derecha">
+                <span
+                  >{{ item.cantidad }} ×
+                  {{ item.precioUnitario | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</span
+                >
+                @if (!resultados()[item.productoId] && resenandoProductoId() !== item.productoId) {
+                  <button class="resenar" (click)="abrirResena(item.productoId)">⭐ Reseñar</button>
+                }
+              </div>
+            </div>
+
+            @if (resultados()[item.productoId]; as r) {
+              <p [class]="r.ok ? 'ok' : 'error'">{{ r.mensaje }}</p>
+            }
+
+            @if (resenandoProductoId() === item.productoId) {
+              <div class="form-resena">
+                <div class="estrellas">
+                  @for (n of [1, 2, 3, 4, 5]; track n) {
+                    <button
+                      type="button"
+                      [class.activa]="n <= calificacion()"
+                      (click)="calificacion.set(n)"
+                    >
+                      ★
+                    </button>
+                  }
+                </div>
+                <textarea
+                  rows="2"
+                  [formControl]="comentario"
+                  placeholder="Cuéntanos qué te pareció (opcional)"
+                ></textarea>
+                <div class="acciones">
+                  <button
+                    class="enviar"
+                    (click)="enviarResena(item.productoId)"
+                    [disabled]="calificacion() === 0 || enviandoResena()"
+                  >
+                    {{ enviandoResena() ? 'Enviando...' : 'Publicar reseña' }}
+                  </button>
+                  <button class="cancelar" (click)="cancelarResena()">Cancelar</button>
+                </div>
+              </div>
+            }
           </div>
         }
 
         <footer>
           <span class="envio">📦 {{ o.direccionEnvio.calle }}, {{ o.direccionEnvio.ciudad }}</span>
-          <strong>{{ o.total | currency:'COP':'symbol-narrow':'1.0-0' }}</strong>
+          <strong>{{ o.total | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</strong>
         </footer>
       </article>
     } @empty {
