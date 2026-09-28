@@ -7,7 +7,7 @@ import { AuthService } from '../../../core/services/auth';
   selector: 'app-registro',
   imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './registro.html',
-  styleUrl: './registro.css'
+  styleUrl: './registro.css',
 })
 export class Registro {
   private fb = inject(FormBuilder);
@@ -21,7 +21,7 @@ export class Registro {
     nombre: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
-    telefono: ['']
+    telefono: [''],
   });
 
   enviar(): void {
@@ -41,7 +41,7 @@ export class Registro {
       error: (err) => {
         this.cargando.set(false);
         this.error.set(this.extraerMensaje(err));
-      }
+      },
     });
   }
 
@@ -55,5 +55,20 @@ export class Registro {
       return Object.values(err.error.errores).join('. ');
     }
     return 'No se pudo completar el registro';
+  }
+
+  mostrarPassword = signal(false);
+
+  fuerzaPassword(): { nivel: number; texto: string } {
+    const p = this.form.controls.password.value;
+    if (!p) return { nivel: 0, texto: '' };
+
+    let puntos = 0;
+    if (p.length >= 8) puntos++;
+    if (/[a-z]/.test(p) && /[A-Z]/.test(p)) puntos++;
+    if (/\d/.test(p) || /[^A-Za-z0-9]/.test(p)) puntos++;
+
+    const nivel = Math.max(1, puntos);
+    return { nivel, texto: ['', 'Débil', 'Media', 'Fuerte'][nivel] };
   }
 }
