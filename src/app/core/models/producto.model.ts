@@ -21,3 +21,12 @@ export interface PaginaProductos {
   totalPages?: number;
   page?: { totalPages: number; number: number };
 }
+
+export interface ProductoRequest {
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  stock: number;
+  categoriaId: number;
+  imagenes: string[];
+}

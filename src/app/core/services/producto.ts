@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PaginaProductos, Producto } from '../models/producto.model';
+import { PaginaProductos, Producto, ProductoRequest } from '../models/producto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,4 +20,8 @@ export class ProductoService {
   obtenerPorId(id: number): Observable<Producto> {
     return this.http.get<Producto>(`${this.API_URL}/${id}`);
   }
+
+  crear(request: ProductoRequest): Observable<Producto> {
+    return this.http.post<Producto>(this.API_URL, request);
+}
 }

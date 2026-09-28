@@ -6,3 +6,9 @@ export interface Resena {
   comentario: string | null;
   fecha: string;
 }
+
+export interface ResenaRequest {
+  productoId: number;
+  calificacion: number;
+  comentario: string;
+}
