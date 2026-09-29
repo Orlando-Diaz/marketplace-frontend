@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { AuthResponse, LoginRequest, RegistroRequest } from '../models/usuario.model';
 import { Injectable, computed, signal } from '@angular/core'
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly API_URL = 'http://localhost:8080/api/auth';
+  private readonly API_URL = `${environment.apiUrl}/auth`;
   private readonly TOKEN_KEY = 'marketplace_token';
 
   usuarioActual = signal<AuthResponse | null>(this.cargarUsuarioGuardado());

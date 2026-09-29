@@ -2,13 +2,14 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Carrito, ItemCarritoRequest } from '../models/carrito.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CarritoService {
   private http = inject(HttpClient);
-  private readonly API_URL = 'http://localhost:8080/api/carrito';
+  private readonly API_URL = `${environment.apiUrl}/carrito`;
 
   obtener(): Observable<Carrito> {
     return this.http.get<Carrito>(this.API_URL);
@@ -21,8 +22,8 @@ export class CarritoService {
   quitar(itemId: number): Observable<Carrito> {
     return this.http.delete<Carrito>(`${this.API_URL}/items/${itemId}`);
   }
-  
+
   actualizarCantidad(itemId: number, cantidad: number): Observable<Carrito> {
-  return this.http.put<Carrito>(`${this.API_URL}/items/${itemId}`, { cantidad });
-}
+    return this.http.put<Carrito>(`${this.API_URL}/items/${itemId}`, { cantidad });
+  }
 }

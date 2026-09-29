@@ -1,29 +1,37 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { FiltrosProductos, PaginaProductos, Producto, ProductoRequest } from '../models/producto.model';
+import {
+  FiltrosProductos,
+  PaginaProductos,
+  Producto,
+  ProductoRequest,
+} from '../models/producto.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductoService {
   private http = inject(HttpClient);
-  private readonly API_URL = 'http://localhost:8080/api/productos';
+  private readonly API_URL = `${environment.apiUrl}/productos`;
 
-  listar(pagina: number, tamano: number, filtros: FiltrosProductos = {}): Observable<PaginaProductos> {
-  let params = new HttpParams()
-    .set('pagina', pagina)
-    .set('tamano', tamano);
+  listar(
+    pagina: number,
+    tamano: number,
+    filtros: FiltrosProductos = {},
+  ): Observable<PaginaProductos> {
+    let params = new HttpParams().set('pagina', pagina).set('tamano', tamano);
 
-  // Solo mandamos los filtros que tienen un valor real
-  for (const [clave, valor] of Object.entries(filtros)) {
-    if (valor !== null && valor !== undefined && valor !== '' && valor !== 0 && valor !== false) {
-      params = params.set(clave, String(valor));
+    // Solo mandamos los filtros que tienen un valor real
+    for (const [clave, valor] of Object.entries(filtros)) {
+      if (valor !== null && valor !== undefined && valor !== '' && valor !== 0 && valor !== false) {
+        params = params.set(clave, String(valor));
+      }
     }
-  }
 
-  return this.http.get<PaginaProductos>(this.API_URL, { params });
-}
+    return this.http.get<PaginaProductos>(this.API_URL, { params });
+  }
 
   obtenerPorId(id: number): Observable<Producto> {
     return this.http.get<Producto>(`${this.API_URL}/${id}`);
@@ -31,17 +39,17 @@ export class ProductoService {
 
   crear(request: ProductoRequest): Observable<Producto> {
     return this.http.post<Producto>(this.API_URL, request);
-}
+  }
 
-misProductos(): Observable<Producto[]> {
-  return this.http.get<Producto[]>(`${this.API_URL}/mis-productos`);
-}
+  misProductos(): Observable<Producto[]> {
+    return this.http.get<Producto[]>(`${this.API_URL}/mis-productos`);
+  }
 
-actualizar(id: number, request: ProductoRequest): Observable<Producto> {
-  return this.http.put<Producto>(`${this.API_URL}/${id}`, request);
-}
+  actualizar(id: number, request: ProductoRequest): Observable<Producto> {
+    return this.http.put<Producto>(`${this.API_URL}/${id}`, request);
+  }
 
-cambiarEstado(id: number, activo: boolean): Observable<Producto> {
-  return this.http.patch<Producto>(`${this.API_URL}/${id}/estado`, null, { params: { activo } });
-}
+  cambiarEstado(id: number, activo: boolean): Observable<Producto> {
+    return this.http.patch<Producto>(`${this.API_URL}/${id}/estado`, null, { params: { activo } });
+  }
 }
